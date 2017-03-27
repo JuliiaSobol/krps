@@ -1,0 +1,272 @@
+package pj3;
+
+import java.util.LinkedList;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class Stack {
+	
+	public static void main(String[] args) {
+				
+			String add1 = "add1";
+			String rAdd = "radd";
+			String add2 = "add2";
+			
+			String delete1 = "delete1";
+			String delete2 = "delete2";
+	
+			String end = "end";
+			String exit = "exit";
+			
+			String swap = "swap";
+				
+		
+			String sEmpty1 = null;;	
+			String sEmpty2 = null;	
+			
+			int counter = 0;
+			int w = 0;
+			
+									
+			Boolean empty1 = true;
+			Boolean empty2 = true;			
+			
+
+									
+			do {				
+				w = 0;
+				
+				if (Stack.items1.size()==0) {
+					empty1 = true;
+					sEmpty1 = "(empty)";
+					
+				} 
+				if (Stack.items1.size()>0) {
+					empty1 = false;
+					sEmpty1 = "(not empty)";
+				}
+				
+				if (Stack.items2.size()==0) {
+					empty2 = true;
+					sEmpty2 = "(empty)";
+					
+				} 
+				if (Stack.items2.size()>0) {
+					empty2 = false;
+					sEmpty2 = "(not empty)";
+				}
+				
+				
+				
+				String messageWindow = JOptionPane.showInputDialog("Список 1 " + "Статус: " + empty1 + ", " + sEmpty1 + " Розмір " +
+						Stack.items1.size() +" " + Stack.items1 + "\n" +
+						"Список 2 " + "Статус: " + empty2 + ", " + sEmpty2 + " розмір " + Stack.items2.size() +" " +Stack.items2 + "\n \n" +
+						"add1 - додати елемент в перший список \n" +
+						"add2 - додати елемент в другий список \n" +
+						"swap = міняє місцями елементи в списках 1 і 2 \n" +
+						"delete1 - видалити елемент з першого списку \n" +
+						"delete2 - видалити елемент з другого списку");
+				
+				
+				if (messageWindow.equals(add1)) {
+					do {				
+						String s = JOptionPane.showInputDialog("Перший список: " +
+								Stack.items1.size() + " Елементів " + "Введіть число для додавання \n"+ 
+								"radd - додає 5 випадкових чисел (1-10 \n)" + 						
+								"end - щоб завершити додавання");
+						
+						if (s.equals(end)) {
+							break;
+						}
+						if (s.equals(rAdd)) {
+							Random r = new Random();
+							
+							for (int i = 0; i<5;i++) {
+								int value1 = r.nextInt(10);
+								value1 = Push1(value1);
+							}							
+						}
+						
+						else {
+							try {
+								int value1 = Integer.valueOf(s);
+								value1 = Push1(value1);							
+							} catch (NumberFormatException e) {
+								JOptionPane.showMessageDialog(null, "Помилка. Некоректний ввід");
+							}														
+						}
+						
+					} while (w==0);
+				}
+								
+				if (messageWindow.equals(add2)) {
+					do {				
+						String s = JOptionPane.showInputDialog("Другий список: " + 
+								Stack.items2.size() + " Елементів " + "Введіть число для додавання \n" +
+								"radd - додає 5 випадкових чисел (1-10 \n)" + 
+								"end - щоб завершити додавання");
+						
+						if (s.equals(end)) {
+							break;
+						}
+						if (s.equals(rAdd)) {
+							Random r = new Random();							
+							for (int i = 0; i<5;i++) {
+								int value2 = r.nextInt(10);
+								value2 = Push2(value2);
+							}							
+						}
+						else {
+							try {
+								int value2 = Integer.valueOf(s);
+								value2 = Push2(value2);							
+							} catch (NumberFormatException e){
+								JOptionPane.showMessageDialog(null, "Помилка. Некоректний ввід");
+							}														
+						}
+					} while (w==0);
+				}
+				
+																
+				if (messageWindow.equals(delete1)) {
+					counter = 0;
+					do {
+						String s = JOptionPane.showInputDialog("Загальна кількість елементів: " 
+					    + Stack.items1.size() + " Скільки елементів ви хочете видалити?");
+						if (s.equals(end)) {
+							break;
+						}
+						else {
+							try {
+								int count = Integer.valueOf(s);
+								if((Stack.items1.size()-count)<0) {
+									JOptionPane.showMessageDialog(null,"Ви хочете видали більше елементів ніж є в списку");
+									break;
+								}
+								else {
+									for (int i = 0; i<count; i++) {
+										int result1 = 0;
+										result1 = Pop1(result1); 							
+									}
+								}
+							} catch (NumberFormatException e) {
+								JOptionPane.showMessageDialog(null, "Помилка. Некоректний ввід");
+							}	
+						}	
+						counter++;
+					} while (counter==0);						
+				} 
+							
+				if (messageWindow.equals(delete2)) {
+					counter = 0;
+					do {
+						String s = JOptionPane.showInputDialog("Загальна кількість елементів: " 
+					    + Stack.items2.size() + " Скільки елементів видалити?");
+						
+						if (s.equals(end)) {
+							break;
+						}
+						else { 
+							try {							
+								int count = Integer.valueOf(s);
+								if((Stack.items2.size()-count)<0) {
+									JOptionPane.showMessageDialog(null,"Ви хочете видали більше елементів ніж є в списку");
+									break;
+								}
+								else {
+									for (int i = 0; i<count; i++) {
+										int result2 = 0;
+										result2 = Pop2(result2); 							
+									}
+								}
+							} catch (NumberFormatException e){
+								JOptionPane.showMessageDialog(null, "Помилка. Некоректний ввід");
+							}								
+						}	
+						counter++;
+					} while (counter==0);						
+				}
+				
+				
+				if (messageWindow.equals(swap)) {	
+					int result1 = 0;
+					result1 = Swap(result1);
+				} 
+																												
+				
+				if (messageWindow.equals(end)) {
+					break;
+				}
+				
+			} while (w==0);
+	}
+	
+	
+	
+//  ДРУГИЙ СПИСОК
+	public static LinkedList<Integer> items1 = new LinkedList();
+	
+		
+	public static int  Push1 (int value1) {
+		items1.addLast(value1);
+		return value1;		
+	}	
+	
+	
+	public static int Pop1(int result1) {
+		result1 = (int) items1.peekLast();
+		items1.removeLast();
+		return result1;
+	} 
+	
+	
+	public static int Swap(int result1) {
+		
+		int counter1 = 0;
+		int counter2 = 0;
+		int size1 = items1.size();
+		int size2 = items2.size();
+		int itemsNum1 = 0;
+		int itemsNum2 = 0;
+		
+		do {
+			itemsNum1 = (int) items1.peekFirst();
+			items1.removeFirst();
+			items2.addLast(itemsNum1);
+			counter1++;
+		} while (counter1<size1);
+		do {
+			itemsNum2 = (int) items2.peekFirst();
+			items2.removeFirst();
+			items1.addLast(itemsNum2);
+			counter2++;					
+		} while (counter2<size2);
+			
+		
+		
+		return result1;
+	}
+	
+	
+//      ДРУГИЙ СПИСОК
+	public static LinkedList<Integer> items2 = new LinkedList<Integer>();
+	
+	
+	public static int  Push2 (int value2) {
+		items2.addLast(value2);
+		return value2;
+	}
+	
+	
+	public static int Pop2(int result2) {
+		result2 = (int) items2.peekLast();
+		items2.removeLast();
+		return result2;
+	} 
+	
+	
+	
+}
